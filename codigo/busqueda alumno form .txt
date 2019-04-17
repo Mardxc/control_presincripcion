@@ -1,0 +1,56 @@
+<table class="table table-condensed" align="center" style="width: 80%;">
+	<tr>
+		<td>
+			Alumno     
+			<!--Id del alumno seleccionado-->
+    		<input type="text" id="id_alumno" style="display:none;">
+    		<!--Id del detalle del grupo-->
+    		<input type="text" id="id_detalles_grupos" style="display:none;">
+		</td>
+		<td>
+		<?php 
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+            'name'=>'alumno_busqueda',
+            //'model'=>$model,
+            'value'=>'sd',
+            'sourceUrl'=>$this->createUrl('ListarAlumnosBusqueda'),
+            'options'=>array(
+            'minLength'=>'1',
+            'showAnim'=>'fold',
+            'select' => 'js:function(event, ui)
+                {
+                	//alert(ui.item.value);
+                    //alert(ui.item.ID_ALUMNO);
+                    //$("id_alumno").val(ui.item.ID_ALUMNO);
+                    //$.fn.yiiGridView.update("Pagos_pendientes",{ data:{"id1":ui.item.ID_ALUMNO,"id2":"alumnos"}});
+                    $("#nombre_alumno").val(ui.item.value);
+					$("#id_alumno").val(ui.item.id); 	 
+
+                }',
+            ),
+            'htmlOptions'=> array('style'=>'width:90%;',
+								'placeholder'=>'Buscar Alumno'),
+            ));
+		 ?>
+		 <button id="buscaA" onclick="buscaAlumno()">Buscar</button>
+		</td>
+		<td>
+			<input type="text" name="nombre_alumno" id="nombre_alumno" readonly value="" />
+			<?php echo CHtml::Button('x', array(
+				'name' 	=> 'alu_name', 
+				'id' 	=> 'alu_name', 
+				'onclick' => '$("#nombre_alumno").val("");$("#id_alumno").val("")')) 
+			?>
+		    <?php echo CHtml::Button('Alumno',
+		    	array('onclick'=>
+		    		'$("#alu_dialog").dialog("open"); 
+		    		$("#nombreAlumno").prop("disabled",false);'
+		    	),
+		    	array('style'=>'color:red;')
+		    ); ?>
+		</td>
+	</tr>
+	<td align="center" colspan="3">
+		<button id="save_alumnos" class="btn btn-success" value="guardar" onclick="accionesAlumnos()">Nuevo</button>
+	</td>
+</table>
